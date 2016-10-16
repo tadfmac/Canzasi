@@ -1,4 +1,4 @@
-![Canzasi-logo](./assets/Canzasi-logo-small.png)
+![Canzasi-logo](./assets/Canzasi-logo-small-m.png)
 
 # Canzasi
 
