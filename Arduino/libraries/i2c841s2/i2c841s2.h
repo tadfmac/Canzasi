@@ -7,8 +7,8 @@
 // base : http://www.mikrocontroller.net/topic/353654 (Autor Zepp 2014-12-31 21:01)
 // base2 : i2c841s.h (https://github.com/tadfmac/mi-muz/tree/master/avr/arduino/libraries/HybridMidiAttiny)
 
-#ifndef __I2CS841_h__
-#define __I2CS841_h__
+#ifndef __I2C841S2_h__
+#define __I2C841S2_h__
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -18,17 +18,20 @@ extern "C"{
 #endif 
 
 // Callback
-void (*onReceived)(uint8_t *pbuf, uint8_t size);
+void (*onReceived)(volatile uint8_t *pbuf, uint8_t size);
 
 // Global Vals
-#define TX_BUF_SIZE 32
-#define RX_BUF_SIZE 32
+#define _TX_BUF_SIZE 1  // default TX buffer size
+#define _RX_BUF_SIZE 1  // default RX buffer size
 
-volatile uint8_t tx_buf[TX_BUF_SIZE];
-volatile uint8_t txd_exist = false;
-volatile uint8_t tx_buf_index = 0;
-volatile uint8_t rx_buf[RX_BUF_SIZE];
-volatile uint8_t rx_buf_index = 0;
+volatile uint8_t _txBufSize = _TX_BUF_SIZE;
+volatile uint8_t _rxBufSize = _RX_BUF_SIZE;
+volatile uint8_t _defaultTxBuf = 0xff;
+volatile uint8_t _defaultRxBuf = 0xff;
+volatile uint8_t *_txBufp = &_defaultTxBuf;
+volatile uint8_t *_rxBufp = &_defaultRxBuf;
+volatile uint8_t _txBufIndex = 0;
+volatile uint8_t _rxBufIndex = 0;
 
 ISR( TWI_SLAVE_vect )
 {  
@@ -39,19 +42,12 @@ ISR( TWI_SLAVE_vect )
   // When TWI Data Interruption is exist
   if(status & (1 << TWDIF)){
     if(TWSSRA & (1 << TWDIR)){  // TWDIR: (1: a master read operation is in progress)
-      if(txd_exist){
-        TWSD = tx_buf[tx_buf_index];
-        tx_buf_index++;
-        if(tx_buf_index >= TX_BUF_SIZE){
-          tx_buf_index = 0;
-          txd_exist = false;
-        }
-      }else{
-        TWSD = 0xff;
-      }
+      TWSD = *(_txBufp + _txBufIndex);
+      _txBufIndex++;
+      _txBufIndex = _txBufIndex % _txBufSize;
     }else{                      // TWDIR: (0: a master write operation is in progress)
-      rx_buf[rx_buf_index%16] = TWSD;
-      rx_buf_index ++;
+      *(_rxBufp + (_rxBufIndex % _rxBufSize)) = TWSD;
+      _rxBufIndex ++;
     }
     TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0));
   // When TWI Address/Stop Interruption is exist
@@ -61,24 +57,19 @@ ISR( TWI_SLAVE_vect )
     }else{    
       if(TWSSRA & (1<<TWAS)){  // Start Condition
         if(!(TWSSRA & (1 << TWDIR))){ // Write Start
-          rx_buf_index = 0;
+          _rxBufIndex = 0;
           TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
         }else{                        // Read Start
-          if(txd_exist){
-            tx_buf_index = 0;
-            TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
-          }else{
-            TWSCRB = (uint8_t) ((1<<TWAA)|(1<<TWCMD1)); // NACK   
-          }
+          _txBufIndex = 0;
+          TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
         }
       }else{                    // Stop Condition
         if(TWSSRA & (1 << TWDIR)){ // Read End
-          txd_exist = false;
         }else{  // Write End
           if(onReceived != 0){
-            (*onReceived)((uint8_t *)rx_buf,(uint8_t)rx_buf_index);
+            (*onReceived)(_rxBufp, _rxBufIndex);
           }
-          rx_buf_index = 0;
+          _rxBufIndex = 0;
         }
         TWSCRB = (uint8_t) (1<<TWCMD1);
       }
@@ -88,14 +79,13 @@ ISR( TWI_SLAVE_vect )
 
 class i2c841slave {
 public:
-  i2c841slave(){}
+  i2c841slave(){
+    onReceived = 0;
+  }
 
   void init(uint8_t addr){
-    onReceived = 0;
-
     DDRA |= 0x50; // SCL,SDA
-
-    TWSA = addr;  // set to slaveaddr << 1; 
+    TWSA = addr << 1;  // set to slaveaddr << 1; 
     TWSD = 0xFF;
 
     // enable twi slave    
@@ -109,19 +99,36 @@ public:
 //    TWSCRA |= (1<<TWPME);  // for Debugging
   }
 
-  void setOnWriteReq(void (*fptr)(uint8_t *pbuf, uint8_t size)){
+  void setOnWriteReq(void (*fptr)(volatile uint8_t *pbuf, uint8_t size)){
+    cli();
     onReceived = fptr;
+    sei();
   }
 
-  int setSendData(uint8_t *pbuf, uint8_t size){
+  void setTxBuffer(volatile uint8_t *pBuf, uint8_t size){
+    cli();
+    _txBufp = pBuf;
+    _txBufSize = size;
+    sei();
+  }
+
+  void setRxBuffer(volatile uint8_t *pBuf, uint8_t size){
+    cli();
+    _rxBufp = pBuf;
+    _rxBufSize = size;
+    sei();
+  }
+
+  int setNextTxData(volatile uint8_t *pbuf, uint8_t size){
     int cnt;
-    if(size > sizeof(tx_buf)){
+    if(size > _txBufSize){
       return 0;
     }
+    cli();
     for(cnt = 0;cnt < size;cnt ++){
-      tx_buf[cnt] = *(pbuf+cnt);
+      *(_txBufp + cnt) = *(pbuf+cnt);
     }
-    txd_exist = true;
+    sei();
     return size;
   }
 
@@ -133,5 +140,5 @@ public:
 
 i2c841slave i2cs;
 
-#endif
+#endif // __I2C841S2_h__
 
