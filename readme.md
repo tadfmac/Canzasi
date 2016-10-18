@@ -4,12 +4,6 @@
 
 「Canzasi」（かんざし）はArduinoを使ってI2C Slaveデバイスを試作するためのボードです。
 
-## Consept
-
-- Arduino IDE対応（ISP Programming）
-- GROVEコネクタ
-- ブレッドボードフレンドリー（1列GPIO）
-
 # boards
 
 ## Canzasi-Prot (WIP)
@@ -17,10 +11,28 @@
 ATtiny841を採用した「Canzasi」最初のプロトタイプボードです。
 Arduino IDEからISP経由での書き込みに対応しています。
 
+### Consept
+
+- Arduino IDE対応（ISP Programming）
+- GROVEコネクタ
+- ブレッドボードフレンドリー（1列GPIO）
+
 ![schematic(v0.1)](./boards/Prot/v0.1/schematic.png)
 ![board(v0.1)](./boards/Prot/v0.1/board.png)
 
 [eagle files (v0.1)](./boards/Prot/v0.1/eagle/)
+
+# examples
+
+## [blink](./examples/blink/Canzasi_blink/Canzasi_blink.ino)
+
+Canzasi用のLチカです。
+これは単なるLチカで、I2Cデバイスではありません。
+
+## [simpleLedDevice](./examples/simpleLedDevice/Canzasi/Canzasi_I2Cblink/Canzasi_I2Cblink.ino)
+
+Masterからのwriteデータを受けてLEDの点灯と消灯を行うサンプルです。
+simpleLedDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleLedDevice/Master/Arduino/I2C_MasterHelloWorld/I2C_MasterHelloWorld.ino)）です。
 
 # Licence
 
