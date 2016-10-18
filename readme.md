@@ -31,7 +31,7 @@ Canzasi用のLチカです。
 
 ## [simpleLedDevice](./examples/simpleLedDevice/Canzasi/Canzasi_I2Cblink/Canzasi_I2Cblink.ino)
 
-Masterからのwriteデータを受けてLEDの点灯と消灯を行うサンプルです。
+Masterからのwriteデータを受けてLEDの点灯と消灯を行うサンプルです。    
 simpleLedDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleLedDevice/Master/Arduino/I2C_MasterHelloWorld/I2C_MasterHelloWorld.ino)）です。
 
 # Licence
