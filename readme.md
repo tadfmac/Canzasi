@@ -6,21 +6,39 @@
 
 # boards
 
-## Canzasi-Prot (WIP)
+## Canzasi-Prot
 
 ATtiny841を採用した「Canzasi」最初のプロトタイプボードです。
 Arduino IDEからISP経由での書き込みに対応しています。
 
-### Consept
+### Concept
 
 - Arduino IDE対応（ISP Programming）
 - GROVEコネクタ
 - ブレッドボードフレンドリー（1列GPIO）
 
+### Design Data (v0.1)
+
 ![schematic(v0.1)](./boards/Prot/v0.1/schematic.png)
 ![board(v0.1)](./boards/Prot/v0.1/board.png)
 
 [eagle files (v0.1)](./boards/Prot/v0.1/eagle/)
+
+## Canzasi-Wrtr
+
+Canzasi-Protにプログラムを書き込むためのArduino UNO用シールドです。
+
+### Concept
+
+- ミニマル
+- Canzasi-Protとの接続にケーブル不要
+
+### Design Data (v0.1)
+
+![schematic(v0.1)](./boards/Wrtr/v0.1/schematic.png)
+![board(v0.1)](./boards/Wrtr/v0.1/board.png)
+
+[eagle files (v0.1)](./boards/Wrtr/v0.1/eagle/)
 
 # examples
 
