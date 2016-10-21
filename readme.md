@@ -47,10 +47,16 @@ Canzasi-Protにプログラムを書き込むためのArduino UNO用シールド
 Canzasi用のLチカです。
 これは単なるLチカで、I2Cデバイスではありません。
 
+## [simpleButtonDevice](./examples/simpleButtonDevice/Canzasi/Canzasi_I2CDataProvider/Canzasi_I2CDataProvider.ino)
+
+Masterからのreadデータを受けてButtonが押されているかどうかを返すサンプルです。    
+simpleButtonDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleButtonDevice/Master/Arduino/I2C_MasterReader/I2C_MasterReader.ino)）です。
+
+
 ## [simpleLedDevice](./examples/simpleLedDevice/Canzasi/Canzasi_I2Cblink/Canzasi_I2Cblink.ino)
 
 Masterからのwriteデータを受けてLEDの点灯と消灯を行うサンプルです。    
-simpleLedDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleLedDevice/Master/Arduino/I2C_MasterHelloWorld/I2C_MasterHelloWorld.ino)）です。
+simpleLedDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleLedDevice/Master/Arduino/I2C_MasterWriter/I2C_MasterWriter.ino)）です。
 
 # Licence
 
