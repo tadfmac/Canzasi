@@ -1,4 +1,4 @@
-// I2C Master for Arduino (UNO or Pro Micro)
+// I2C Master Writer for Arduino (UNO or Pro Micro)
 // License CC by 4.0 2016 D.F.Mac.
 #include "Wire.h"
 

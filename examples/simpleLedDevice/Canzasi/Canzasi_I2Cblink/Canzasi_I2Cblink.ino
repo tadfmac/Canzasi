@@ -1,5 +1,5 @@
 // Canzasi_I2Cblink
-// Simple I2C slave demo
+// A simple I2C slave receiver
 //   LED blinking of synchronous when slave received 
 //   "write" data from master.
 // with https://github.com/SpenceKonde/ATTinyCore
