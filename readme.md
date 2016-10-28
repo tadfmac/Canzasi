@@ -17,12 +17,12 @@ Arduino IDEからISP経由での書き込みに対応しています。
 - GROVEコネクタ
 - ブレッドボードフレンドリー（1列GPIO）
 
-### Design Data (v0.1)
+### Design Data (v0.2)
 
-![schematic(v0.1)](./boards/Prot/v0.1/schematic.png)
-![board(v0.1)](./boards/Prot/v0.1/board.png)
+![schematic(v0.2)](./boards/Prot/v0.2/schematic.png)
+![board(v0.2)](./boards/Prot/v0.2/board.png)
 
-[eagle files (v0.1)](./boards/Prot/v0.1/eagle/)
+[eagle files (v0.2)](./boards/Prot/v0.2/eagle/)
 
 ## Canzasi-Wrtr
 
@@ -32,13 +32,14 @@ Canzasi-Protにプログラムを書き込むためのArduino UNO用シールド
 
 - ミニマル
 - Canzasi-Protとの接続にケーブル不要
+- Groveコネクタ(I2C)付き。I2Cマスターのテストにも利用可能 (v0.2)
 
-### Design Data (v0.1)
+### Design Data (v0.2)
 
-![schematic(v0.1)](./boards/Wrtr/v0.1/schematic.png)
-![board(v0.1)](./boards/Wrtr/v0.1/board.png)
+![schematic(v0.2)](./boards/Wrtr/v0.2/schematic.png)
+![board(v0.2)](./boards/Wrtr/v0.2/board.png)
 
-[eagle files (v0.1)](./boards/Wrtr/v0.1/eagle/)
+[eagle files (v0.2)](./boards/Wrtr/v0.2/eagle/)
 
 # examples
 
@@ -51,7 +52,6 @@ Canzasi用のLチカです。
 
 Masterからのreadデータを受けてButtonが押されているかどうかを返すサンプルです。    
 simpleButtonDeviceの制御テスト用のマスターコードはこちら（[Arduino用](./examples/simpleButtonDevice/Master/Arduino/I2C_MasterReader/I2C_MasterReader.ino)）です。
-
 
 ## [simpleLedDevice](./examples/simpleLedDevice/Canzasi/Canzasi_I2Cblink/Canzasi_I2Cblink.ino)
 
