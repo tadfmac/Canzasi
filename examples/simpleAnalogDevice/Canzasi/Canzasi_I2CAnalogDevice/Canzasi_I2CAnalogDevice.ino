@@ -1,5 +1,5 @@
-// Canzasi_I2CDummySensor
-// A simple I2C slave data provider
+// Canzasi_I2CAnalogDevice
+// A simple I2C Analog Device
 //   
 // with https://github.com/SpenceKonde/ATTinyCore
 // 
@@ -17,22 +17,23 @@
 //
 #include "i2c841s2.h"
 
-#define BUTTON_PIN 9
+#define ANALOG_PIN 0
+
+volatile uint16_t tx_data = 0;
+#define TX_BUFFER_SIZE 2
+
 
 void setup() {
-  pinMode(BUTTON_PIN,INPUT);
   // default tx buffer length (per packet size) is 1 byte
   // if slave device specified another size, use i2cs.setTxBuffer()
 
+  i2cs.setTxBuffer((uint8_t *)&tx_data,TX_BUFFER_SIZE);
   // start i2c slave interrupt
   i2cs.init(0x30);            
 }
 
-uint8_t tx_data = 0;
-#define TX_BUFFER_SIZE 1
 
 void loop() {
-  tx_data = (uint8_t)digitalRead(BUTTON_PIN);
-  i2cs.setNextTxByte(tx_data);
+  tx_data = analogRead(ANALOG_PIN);
   delay(50);
 }

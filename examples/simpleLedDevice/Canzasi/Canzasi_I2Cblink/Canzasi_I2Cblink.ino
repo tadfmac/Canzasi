@@ -43,7 +43,7 @@ void setup() {
   pinMode(LED_PIN,OUTPUT);
   pinMode(ERRLED_PIN,OUTPUT);
   
-  i2cs.setOnWriteReq(onI2CWrite);
+  i2cs.setOnWriteEnd(onI2CWrite);
   
   // default rx buffer length (per packet size) is 1 byte
   // if slave device specified another size, use i2cs.setRxBuffer()

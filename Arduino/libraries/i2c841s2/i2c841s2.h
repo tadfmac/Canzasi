@@ -2,7 +2,7 @@
 //
 // I2C Slave Library for mi:muz:expr
 //
-// CC 2015 by D.F.Mac.
+// CC 2016 by D.F.Mac.
 //
 // base : http://www.mikrocontroller.net/topic/353654 (Autor Zepp 2014-12-31 21:01)
 // base2 : i2c841s.h (https://github.com/tadfmac/mi-muz/tree/master/avr/arduino/libraries/HybridMidiAttiny)
@@ -18,7 +18,7 @@ extern "C"{
 #endif 
 
 // Callback
-void (*onReceived)(volatile uint8_t *pbuf, uint8_t size);
+void (*onWriteEnd)(volatile uint8_t *pbuf, uint8_t size);
 
 // Global Vals
 #define _TX_BUF_SIZE 1  // default TX buffer size
@@ -56,18 +56,19 @@ ISR( TWI_SLAVE_vect )
       TWSCRB = (uint8_t) (1<<TWCMD1);
     }else{    
       if(TWSSRA & (1<<TWAS)){  // Start Condition
-        if(!(TWSSRA & (1 << TWDIR))){ // Write Start
-          _rxBufIndex = 0;
-          TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
-        }else{                        // Read Start
-          _txBufIndex = 0;
-          TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
+        if(_rxBufIndex != 0){  // For SR Condition
+          if(onWriteEnd != 0){
+            (*onWriteEnd)(_rxBufp, _rxBufIndex);
+          }
         }
+        _rxBufIndex = 0;
+        _txBufIndex = 0;
+        TWSCRB = (uint8_t) ((1<<TWCMD1)|(1<<TWCMD0)); // ACK   
       }else{                    // Stop Condition
         if(TWSSRA & (1 << TWDIR)){ // Read End
         }else{  // Write End
-          if(onReceived != 0){
-            (*onReceived)(_rxBufp, _rxBufIndex);
+          if(onWriteEnd != 0){
+            (*onWriteEnd)(_rxBufp, _rxBufIndex);
           }
           _rxBufIndex = 0;
         }
@@ -80,7 +81,7 @@ ISR( TWI_SLAVE_vect )
 class i2c841slave {
 public:
   i2c841slave(){
-    onReceived = 0;
+    onWriteEnd = 0;
   }
 
   void init(uint8_t addr){
@@ -99,9 +100,9 @@ public:
 //    TWSCRA |= (1<<TWPME);  // for Debugging
   }
 
-  void setOnWriteReq(void (*fptr)(volatile uint8_t *pbuf, uint8_t size)){
+  void setOnWriteEnd(void (*fptr)(volatile uint8_t *pbuf, uint8_t size)){
     cli();
-    onReceived = fptr;
+    onWriteEnd = fptr;
     sei();
   }
 
@@ -119,17 +120,10 @@ public:
     sei();
   }
 
-  int setNextTxData(volatile uint8_t *pbuf, uint8_t size){
-    int cnt;
-    if(size > _txBufSize){
-      return 0;
-    }
+  void setNextTxByte(uint8_t data){
     cli();
-    for(cnt = 0;cnt < size;cnt ++){
-      *(_txBufp + cnt) = *(pbuf+cnt);
-    }
+    *(_txBufp) = data;
     sei();
-    return size;
   }
 
 };
