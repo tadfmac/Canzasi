@@ -7,8 +7,8 @@
 //
 //                   +----+
 //                VCC|    |GND
-//        PB0/A11/ D0|    |D10/A0 /PA0
-// ERRLED PB1/A10/ D1|    |D9 /A1 /PA1    Button (with pulldown)
+//        PB0/A11/ D0|    |D10/A0 /PA0    Analog Pin
+// ERRLED PB1/A10/ D1|    |D9 /A1 /PA1    
 //        PB3/ A9/D11|    |D8 /A2 /PA2
 //        PB2/ A8/ D2|    |D7 /A3 /PA3
 //        PA7/ A7/ D3|    |D6 /A4 /PA4    SCL
