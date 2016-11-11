@@ -32,14 +32,15 @@ Canzasi-Protにプログラムを書き込むためのArduino UNO用シールド
 
 - ミニマル
 - Canzasi-Protとの接続にケーブル不要
-- Groveコネクタ(I2C)付き。I2Cマスターのテストにも利用可能 (v0.2)
 
-### Design Data (v0.2)
+### Design Data (v0.1)
 
-![schematic(v0.2)](./boards/Wrtr/v0.2/schematic.png)
-![board(v0.2)](./boards/Wrtr/v0.2/board.png)
+![schematic(v0.1)](./boards/Wrtr/v0.1/schematic.png)
+![board(v0.1)](./boards/Wrtr/v0.1/board.png)
 
-[eagle files (v0.2)](./boards/Wrtr/v0.2/eagle/)
+[eagle files (v0.1)](./boards/Wrtr/v0.1/eagle/)
+
+> v0.2に不具合 (#7) が見つかったため、一時的にstableをv0.1に戻しています。
 
 # examples
 
