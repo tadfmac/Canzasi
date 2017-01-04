@@ -64,6 +64,20 @@ simpleButtonDeviceを利用するマスターデバイスのサンプルコー�
 Masterからのwriteデータを受けてLEDの点灯と消灯を行うサンプルです。    
 simpleLedDeviceを利用するマスターデバイスのサンプルコードはこちら（[Arduino用](./examples/simpleLedDevice/Master/Arduino/I2C_MasterWriter/I2C_MasterWriter.ino)）です。
 
+## [combined_4_Analog_1](./examples/combined_4_Analog_1/Canzasi/Canzasi_combined_4_Analog_1/Canzasi_combined_4_Analog_1.ino)
+
+4つのアナログボリューム（可変抵抗）を接続したデバイスです。
+Masterからのwrite 1byte（4つのアナログボリュームのどの値を返すかを指定）の後にSRを経由した Read 1byteに対応して8bitのアナログボリュームのデータを返します。
+
+combined_4_Analog_1を利用するマスターデバイスのサンプルコードはこちら（[CHIRIMEN用](./examples/combined_4_Analog_1/Master/chirimen/)）です。
+
+## [combined_4_Analog_2](./examples/combined_4_Analog_2/Canzasi/Canzasi_combined_4_Analog_2/Canzasi_combined_4_Analog_2.ino)
+
+4つのアナログボリューム（可変抵抗）を接続したデバイスです。
+Masterからのwrite 1byte（4つのアナログボリュームを2つづつのセットにして、グループA、Bどちらの値を返すかを指定）の後にSRを経由した Read 2byteに対応して8bitのアナログボリューム2つ分のデータを返します。
+
+combined_4_Analog_2を利用するマスターデバイスのサンプルコードはこちら（[CHIRIMEN用](./examples/combined_4_Analog_2/Master/chirimen/)）です。
+
 # Licence
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br />このリポジトリで公開するプログラムソースコードやハードウエア設計情報は <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">クリエイティブ・コモンズ 表示 4.0 国際 ライセンスの下に提供されています。</a>

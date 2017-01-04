@@ -1,0 +1,13 @@
+{
+  "name": "Canzasi-Analog v0.1",
+  "description": "Canzasi-Analog app",
+  "type": "certified",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "chirimen-oh",
+    "url": "https://github.com/chirimen-oh/"
+  },
+  "icons": {
+    "512": "./canzasi-icon.png"
+  }
+}

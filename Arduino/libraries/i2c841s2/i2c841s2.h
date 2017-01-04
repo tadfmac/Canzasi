@@ -18,20 +18,20 @@ extern "C"{
 #endif 
 
 // Callback
-void (*onWriteEnd)(volatile uint8_t *pbuf, uint8_t size);
+static void (*onWriteEnd)(uint8_t *pbuf, uint8_t size);
 
 // Global Vals
 #define _TX_BUF_SIZE 1  // default TX buffer size
 #define _RX_BUF_SIZE 1  // default RX buffer size
 
-volatile uint8_t _txBufSize = _TX_BUF_SIZE;
-volatile uint8_t _rxBufSize = _RX_BUF_SIZE;
-volatile uint8_t _defaultTxBuf = 0xff;
-volatile uint8_t _defaultRxBuf = 0xff;
-volatile uint8_t *_txBufp = &_defaultTxBuf;
-volatile uint8_t *_rxBufp = &_defaultRxBuf;
-volatile uint8_t _txBufIndex = 0;
-volatile uint8_t _rxBufIndex = 0;
+static volatile uint8_t _txBufSize = _TX_BUF_SIZE;
+static volatile uint8_t _rxBufSize = _RX_BUF_SIZE;
+static volatile uint8_t _defaultTxBuf = 0xff;
+static volatile uint8_t _defaultRxBuf = 0xff;
+static volatile uint8_t *_txBufp = &_defaultTxBuf;
+static volatile uint8_t *_rxBufp = &_defaultRxBuf;
+static volatile uint8_t _txBufIndex = 0;
+static volatile uint8_t _rxBufIndex = 0;
 
 ISR( TWI_SLAVE_vect )
 {  
@@ -100,30 +100,22 @@ public:
 //    TWSCRA |= (1<<TWPME);  // for Debugging
   }
 
-  void setOnWriteEnd(void (*fptr)(volatile uint8_t *pbuf, uint8_t size)){
-    cli();
+  void setOnWriteEnd(void (*fptr)(uint8_t *pbuf, uint8_t size)){
     onWriteEnd = fptr;
-    sei();
   }
 
-  void setTxBuffer(volatile uint8_t *pBuf, uint8_t size){
-    cli();
+  void setTxBuffer(uint8_t *pBuf, uint8_t size){
     _txBufp = pBuf;
     _txBufSize = size;
-    sei();
   }
 
-  void setRxBuffer(volatile uint8_t *pBuf, uint8_t size){
-    cli();
+  void setRxBuffer(uint8_t *pBuf, uint8_t size){
     _rxBufp = pBuf;
     _rxBufSize = size;
-    sei();
   }
 
   void setNextTxByte(uint8_t data){
-    cli();
     *(_txBufp) = data;
-    sei();
   }
 
 };
