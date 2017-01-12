@@ -47,7 +47,7 @@ Canzasi-Protにプログラムを書き込むためのArduino UNO用シールド
 Canzasiを搭載しいたCHIRIMEN用のシールドです。
 外部に2つのGPIOしか出ていないこともあり、本ボードではATtiny841より安価なATtiny441を採用しています。
 
-[!simpleshield](./boards/SimpleShield/simpleshield.jpg)
+![simpleshield](./boards/SimpleShield/simpleshield.jpg)
 
 T.B.D.
 
