@@ -1,0 +1,13 @@
+{
+  "name": "SimpleShield ADC v0.1",
+  "description": "SimpleShield ADC",
+  "type": "certified",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "chirimen-oh",
+    "url": "https://github.com/chirimen-oh/"
+  },
+  "icons": {
+    "512": "./canzasi-icon.png"
+  }
+}

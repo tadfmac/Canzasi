@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<title>Simple Shield Test</title>
+<script src="./minified.js"></script>
+<script src="./webi2c-p2.js"></script>
+<script src="./canzasi-analog.js"></script>
+<script src="./main.js"></script>
+<style>
+html,body,#main{
+	height:100%;
+}
+#main{
+	position:relative;
+}
+#wrapdata{
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	width:1600px;
+	height:400px;
+	display:block;
+	margin: auto;
+}
+.val{
+	width:760px;
+	font-size:160px;
+	line-height:360px;
+	vertical-align:middle;
+	text-align:center;
+	float:left;
+	background-color:pink;
+	margin:20px;
+}
+.blink{
+	background-color:deeppink;
+	color:white;
+}
+.nomal{
+	background-color:pink;
+	color:black;
+}
+
+</style>
+</head>
+<body>
+<div id="main">
+  <div id="wrapdata">
+    <div class="val" id="data0">0</div>
+    <div class="val" id="data1">0</div>
+  </div>
+</div>
+</body>
+</html>
