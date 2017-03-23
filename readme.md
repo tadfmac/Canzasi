@@ -42,14 +42,22 @@ Canzasi-Protにプログラムを書き込むためのArduino UNO用シールド
 
 > v0.2に不具合 (#7) が見つかったため、一時的にstableをv0.1に戻しています。
 
-## CHRMN-SimpleShield (v0.2)
+## CHRMN-SimpleShield
 
 Canzasiを搭載しいたCHIRIMEN用のシールドです。
 外部に2つのGPIOしか出ていないこともあり、本ボードではATtiny841より安価なATtiny441を採用しています。
 
 ![simpleshield](./boards/SimpleShield/simpleshield.jpg)
+※写真はv0.1のものです。
 
-T.B.D.
+### Concept
+
+- 小さなフットプリントでCHIRIMENの基本的な実験に必要な機能を全て搭載
+
+### Design Data (v0.2)
+
+![schematic(v0.2)](./boards/SimpleShield/v0.2/schematic.png)
+![board(v0.2)](./boards/SimpleShield/v0.2/board.png)
 
 # examples
 

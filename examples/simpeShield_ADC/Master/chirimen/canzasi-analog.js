@@ -1,6 +1,6 @@
 var canzasi = function(i2cPort){
   this.i2cPort = i2cPort;
-  this.slaveAddress = 0x30;
+  this.slaveAddress = 0x31;
   this.i2cSlave = null;
 };
 
