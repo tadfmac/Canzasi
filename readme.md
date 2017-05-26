@@ -59,6 +59,22 @@ Canzasiを搭載しいたCHIRIMEN用のシールドです。
 ![schematic(v0.2)](./boards/SimpleShield/v0.2/schematic.png)
 ![board(v0.2)](./boards/SimpleShield/v0.2/board.png)
 
+## Canzasi-Cont
+
+CanzasiをベースにしたI2C接続ゲームパッドです。
+
+### Concept
+
+- ちいさい
+- Groveコネクタで簡単に接続
+
+### Design Data (v0.1)
+
+![schematic(v0.1)](./boards/Cont/v0.1/schematic.png)
+![board(v0.1)](./boards/Cont/v0.1/board.png)
+
+[eagle files (v0.1)](./boards/Cont/v0.1/eagle/)
+
 # examples
 
 ## [blink](./examples/blink/Canzasi_blink/Canzasi_blink.ino)
